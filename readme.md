@@ -1,12 +1,15 @@
 # JS Homework
 
-## React styles
+## Query
 
-Add scss to your project  
-Use scss modules for new styles  
-Finish styling section [Link](https://nicepage.com/website-design/preview/bakery-products-3264384?device=desktop)
+Create input component
+On change fetch [this resource](https://dummyjson.com/docs/products/#search)  
+And paste input value as query param
 
-## CV
+## Pagination
 
-Create your CV in react  
-Media query [reference](https://www.w3schools.com/Css/css3_mediaqueries.asp)
+Create input component  
+Create 2 buttons component next and prev
+Fetch data on page load [reference](https://dummyjson.com/docs/products/#limit_skip)  
+On button click update skip  
+On input change update select
