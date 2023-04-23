@@ -2,6 +2,8 @@ import { Product, IProduct } from "../../components/product";
 import viteLogo from "/vite.svg";
 import reactLogo from "../../assets/react.svg";
 
+import styles from "./styles.module.scss";
+
 const config: IProduct[] = [
   {
     src: viteLogo,
@@ -31,7 +33,7 @@ const config: IProduct[] = [
 
 export const Assortment = () => {
   return (
-    <div>
+    <div className={styles["container"]}>
       {config.map((item) => (
         <Product {...item} />
       ))}
