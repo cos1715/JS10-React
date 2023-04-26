@@ -32,10 +32,19 @@ const config: IProduct[] = [
 ];
 
 export const Assortment = () => {
+  console.log(styles);
+
   return (
     <div className={styles["container"]}>
-      {config.map((item) => (
-        <Product {...item} />
+      {config.map((item, index) => (
+        <Product
+          key={index}
+          description={item.description}
+          price={item.price}
+          title={item.title}
+          src={item.src}
+          // unique
+        ></Product>
       ))}
     </div>
   );

@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, ReactNode } from "react";
 import cn from "classnames";
 import { Image } from "../image";
 import { ProductDescription } from "../product-description";
@@ -10,6 +10,8 @@ export interface IProduct {
   title: string;
   description: string;
   price: number;
+  unique?: boolean;
+  children?: ReactNode;
 }
 
 interface IProductItem {
@@ -18,10 +20,17 @@ interface IProductItem {
   price: number;
   thumbnail: string;
 }
+const className = "dsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfds";
+const transformText = (str: string) => {
+  return str.toUpperCase();
+};
 
-export const Product: FC<IProduct> = ({ description, price, title, src }) => {
-  const [lightTheme, setLightTheme] = useState<boolean>(false);
+export const Product: FC<IProduct> = ({ children }) => {
+  const [lightTheme, setLightTheme] = useState<boolean>();
   const [product, setProduct] = useState<IProductItem>();
+
+  let calc = 1;
+  calc = Math.random();
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -32,7 +41,12 @@ export const Product: FC<IProduct> = ({ description, price, title, src }) => {
     };
 
     loadProduct();
-  }, []);
+    console.log("lightTheme effect", lightTheme);
+
+    return () => {
+      console.log("lightTheme cleanup", lightTheme);
+    };
+  }, [lightTheme]);
 
   const onClick = () => {
     setLightTheme((prevState) => !prevState);
@@ -54,7 +68,7 @@ export const Product: FC<IProduct> = ({ description, price, title, src }) => {
             <h5>$ {product.price}</h5>
           </>
         ) : (
-          <p>Loading...</p>
+          <p>Loading...{calc}</p>
         )}
       </ProductDescription>
     </div>
