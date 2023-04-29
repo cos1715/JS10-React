@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { Product, IProductItem } from "../../components/product";
 
 const useProductsFetch = (query: string) => {
@@ -15,7 +15,7 @@ const useProductsFetch = (query: string) => {
 };
 
 function debounce(func: (...args: any[]) => unknown, timeout = 300) {
-  let timer: number;
+  let timer: NodeJS.Timer;
   return function (this: unknown, ...args: unknown[]) {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -24,14 +24,38 @@ function debounce(func: (...args: any[]) => unknown, timeout = 300) {
   };
 }
 
+const useCustomRef = () => {
+  // ref can store value between rerenders
+  const inputRef = useRef<HTMLInputElement>(null);
+  const randomRef = useRef(Math.random());
+  const random = Math.random();
+
+  console.log("random", random);
+  console.log("randomRef", randomRef.current);
+
+  return inputRef;
+};
+
 export const Search = () => {
   const [query, setQuery] = useState<string>("phone");
-  const deferredQuery = useDeferredValue(query);
-  const [counter, setCounter] = useState<number>(1);
-  const products = useProductsFetch(deferredQuery);
+  const products = useProductsFetch(query);
+  const inputRef = useCustomRef();
 
-  console.log(query);
-  console.log(products);
+  const memo = useMemo(() => {
+    return { query };
+  }, [query]);
+
+  const memo2 = useMemo(() => {
+    return { query };
+  }, [memo]);
+
+  useEffect(() => {
+    // ref to input element
+    // see below how you can get ref
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const onChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -41,11 +65,12 @@ export const Search = () => {
     <>
       <div>
         <input
+          // you can pass ref prop to element
+          // ref gives you reference to this element
+          ref={inputRef}
           type="text"
-          // value={query}
           onChange={onChange}
         />
-        <button onClick={() => setCounter(counter + 1)}>click {counter}</button>
       </div>
       <br />
       {products.length ? (

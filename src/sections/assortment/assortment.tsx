@@ -30,7 +30,6 @@ const useFetchProducts = () => {
 
 export const Assortment = () => {
   const products = useFetchProducts();
-  console.log("products", products);
 
   return (
     <div className={styles["container"]}>

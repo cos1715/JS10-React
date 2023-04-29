@@ -1,7 +1,8 @@
-import { FC, useState, useEffect, ReactNode } from "react";
+import { FC, ReactNode, useContext } from "react";
 import cn from "classnames";
 import { Image } from "../image";
 import { ProductDescription } from "../product-description";
+import { ThemeContext } from "../../providers/theme-provider";
 
 import styles from "./styles.module.scss";
 
@@ -29,30 +30,19 @@ export const Product: FC<Partial<IProduct>> = ({
   src,
   title,
 }) => {
-  const [lightTheme, setLightTheme] = useState<boolean>();
-
-  const onClick = () => {
-    setLightTheme((prevState) => !prevState);
-  };
+  const themeContext = useContext(ThemeContext);
 
   return (
     <div
       className={cn(styles["product"], {
-        [styles["product-light"]]: lightTheme,
+        [styles["product-light"]]: themeContext.theme === "light",
       })}
-      onClick={onClick}
     >
       <Image src={src} alt={title}></Image>
       <ProductDescription>
-        {true ? (
-          <>
-            <h4>{title}</h4>
-            <p>{description}</p>
-            <h5>$ {price}</h5>
-          </>
-        ) : (
-          <p>Loading...</p>
-        )}
+        <h4>{title}</h4>
+        <p>{description}</p>
+        <h5>$ {price}</h5>
       </ProductDescription>
     </div>
   );

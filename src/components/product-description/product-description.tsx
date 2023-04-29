@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useContext } from "react";
 
 interface IProductDescription {
   children: ReactNode;
