@@ -1,2 +1,2 @@
 export { Product } from "./product";
-export type { IProduct } from "./product";
+export type { IProduct, IProductItem } from "./product";

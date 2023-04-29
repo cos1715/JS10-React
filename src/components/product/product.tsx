@@ -14,39 +14,22 @@ export interface IProduct {
   children?: ReactNode;
 }
 
-interface IProductItem {
+export interface IProductItem {
+  id: number;
   title: string;
   description: string;
   price: number;
   thumbnail: string;
 }
-const className = "dsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfdsfds";
-const transformText = (str: string) => {
-  return str.toUpperCase();
-};
 
-export const Product: FC<IProduct> = ({ children }) => {
+export const Product: FC<Partial<IProduct>> = ({
+  children,
+  description,
+  price,
+  src,
+  title,
+}) => {
   const [lightTheme, setLightTheme] = useState<boolean>();
-  const [product, setProduct] = useState<IProductItem>();
-
-  let calc = 1;
-  calc = Math.random();
-
-  useEffect(() => {
-    const loadProduct = async () => {
-      const id = Math.floor(Math.random() * 10) + 1;
-      const res = await fetch(`https://dummyjson.com/products/${id}`);
-      const data = await res.json();
-      setProduct(data);
-    };
-
-    loadProduct();
-    console.log("lightTheme effect", lightTheme);
-
-    return () => {
-      console.log("lightTheme cleanup", lightTheme);
-    };
-  }, [lightTheme]);
 
   const onClick = () => {
     setLightTheme((prevState) => !prevState);
@@ -59,16 +42,16 @@ export const Product: FC<IProduct> = ({ children }) => {
       })}
       onClick={onClick}
     >
-      <Image src={product?.thumbnail} alt={product?.title}></Image>
+      <Image src={src} alt={title}></Image>
       <ProductDescription>
-        {product ? (
+        {true ? (
           <>
-            <h4>{product.title}</h4>
-            <p>{product.description}</p>
-            <h5>$ {product.price}</h5>
+            <h4>{title}</h4>
+            <p>{description}</p>
+            <h5>$ {price}</h5>
           </>
         ) : (
-          <p>Loading...{calc}</p>
+          <p>Loading...</p>
         )}
       </ProductDescription>
     </div>

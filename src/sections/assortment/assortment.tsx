@@ -1,51 +1,53 @@
-import { Product, IProduct } from "../../components/product";
+import { useEffect, useState, useTransition } from "react";
+import { Product, IProduct, IProductItem } from "../../components/product";
 import viteLogo from "/vite.svg";
 import reactLogo from "../../assets/react.svg";
 
 import styles from "./styles.module.scss";
 
-const config: IProduct[] = [
-  {
-    src: viteLogo,
-    title: "Sourdough Loaf",
-    description: "Sample text, consectetur adipiscing.",
-    price: 4.65,
-  },
-  {
-    src: reactLogo,
-    title: "Baguette",
-    description: "Small-batch sourdough baguette.",
-    price: 3.05,
-  },
-  {
-    src: viteLogo,
-    title: "Farmers Loaf",
-    description: "Slow-fermented sourdough Rye studded with Kalamata.",
-    price: 5.5,
-  },
-  {
-    src: reactLogo,
-    title: "Round Bread",
-    description: "Made with 100% whole grain flour and high in fiber.",
-    price: 5.15,
-  },
-];
+const useFetchProducts = () => {
+  const [products, setProducts] = useState<undefined | IProductItem[]>();
+  const ids: number[] = [];
+  for (let i = 0; i < 4; i++) {
+    const id = Math.floor(Math.random() * 10) + 1;
+    ids.push(id);
+  }
+
+  useEffect(() => {
+    const promises: Promise<Response>[] = [];
+    for (let i = 0; i < 4; i++) {
+      promises.push(fetch(`https://dummyjson.com/products/${ids[i]}`));
+    }
+    Promise.all(promises)
+      .then((res) => Promise.all(res.map((promise) => promise.json())))
+      .then((data) => {
+        setProducts(data);
+      });
+  }, []);
+
+  return products;
+};
 
 export const Assortment = () => {
-  console.log(styles);
+  const products = useFetchProducts();
+  console.log("products", products);
 
   return (
     <div className={styles["container"]}>
-      {config.map((item, index) => (
-        <Product
-          key={index}
-          description={item.description}
-          price={item.price}
-          title={item.title}
-          src={item.src}
-          // unique
-        ></Product>
-      ))}
+      {products ? (
+        products.map((item, index) => (
+          <Product
+            key={index}
+            description={item.description}
+            price={item.price}
+            title={item.title}
+            src={item.thumbnail}
+            // unique
+          ></Product>
+        ))
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };
