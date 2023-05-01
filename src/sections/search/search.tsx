@@ -41,13 +41,15 @@ export const Search = () => {
   const products = useProductsFetch(query);
   const inputRef = useCustomRef();
 
-  const memo = useMemo(() => {
-    return { query };
-  }, [query]);
+  // Example how to memo objects in dependency array
+  // Dependency array have same issues with complex data like memo
+  // const memo = useMemo(() => {
+  //   return { query };
+  // }, [query]);
 
-  const memo2 = useMemo(() => {
-    return { query };
-  }, [memo]);
+  // const memo2 = useMemo(() => {
+  //   return memo;
+  // }, [memo]);
 
   useEffect(() => {
     // ref to input element

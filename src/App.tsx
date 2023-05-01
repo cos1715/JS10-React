@@ -9,6 +9,7 @@ import "./App.css";
 
 function App() {
   return (
+    // Usage of provider
     <ThemeProvider>
       <div className="App">
         <ThemeButton />
