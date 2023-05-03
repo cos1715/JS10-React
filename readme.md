@@ -18,5 +18,5 @@ On click detect row number, cell number and cell type
 Print result in p tag above table
 
 Example:  
-Click on first td in first row
+Click on first td in first row  
 p tag should have row: 1, cell: 1, cell type: td
