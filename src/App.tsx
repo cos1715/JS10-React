@@ -1,14 +1,18 @@
+import { AgeProvider } from "providers/age";
 import { InputTask } from "sections/input-task";
+import { ContextTabs } from "sections/context-tabs";
+import { Forms } from "sections/forms";
 
 import "./App.css";
-import { TimerInterval, TimerTimeout } from "sections/timer";
 
 function App() {
   return (
     <div className="App">
-      <InputTask />
-      <TimerInterval />
-      <TimerTimeout />
+      <AgeProvider>
+        <InputTask />
+        <ContextTabs />
+        <Forms />
+      </AgeProvider>
     </div>
   );
 }

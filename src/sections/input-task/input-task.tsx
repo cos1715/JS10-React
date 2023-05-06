@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "components/button";
 import { Input, IInput } from "components/input";
+import { Age } from "providers/age";
 
 const checkAge = (value: string) => {
   return parseInt(value) > 17;
@@ -8,12 +9,13 @@ const checkAge = (value: string) => {
 
 export const InputTask = () => {
   const [value, setValue] = useState<string>("");
+  const { setAge } = useContext(Age);
   const onChange: IInput["onChange"] = (e) => {
     setValue(e.target.value);
   };
-  const onClick = () => {};
-
-  console.log(value);
+  const onClick = () => {
+    setAge(parseInt(value));
+  };
 
   return (
     <div>
