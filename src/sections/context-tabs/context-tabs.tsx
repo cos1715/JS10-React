@@ -1,6 +1,7 @@
 import { ReactNode, useContext } from "react";
 import { Tabs, ITabConfig } from "components/tabs";
 import { TimerInterval, TimerTimeout } from "components/timer";
+import { RenderProps } from "components/render-props";
 import { Age } from "providers/age";
 
 interface IContextData {
@@ -36,6 +37,11 @@ const tabsConfig: ITabConfig[] = [
         <TimerTimeout />
       </ContextData>
     ),
+  },
+  {
+    id: "3",
+    title: "Render Props",
+    content: <RenderProps />,
   },
 ];
 

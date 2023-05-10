@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, FocusEvent } from "react";
 
 type TFormEvent = FormEvent<HTMLFormElement>["target"];
 type TFormElements = TFormEvent & {
@@ -8,10 +8,31 @@ type TFormElements = TFormEvent & {
   };
 };
 
+const BlurForm = () => {
+  const [error, setError] = useState(false);
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("submit");
+  };
+
+  const onBlur = (e: FocusEvent<HTMLInputElement, Element>) => {
+    setError(e.target.value.length < 3);
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <input type="text" name="name" onBlur={onBlur} />
+      {error && <p>Text Is Too Short</p>}
+      <button disabled={error}>Submit Form</button>
+    </form>
+  );
+};
+
 export const Forms = () => {
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "" });
   return (
     <div>
+      <BlurForm />
       <form
         onSubmit={(e) => {
           e.preventDefault();
