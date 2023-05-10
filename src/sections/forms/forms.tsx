@@ -1,4 +1,12 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+
+type TFormEvent = FormEvent<HTMLFormElement>["target"];
+type TFormElements = TFormEvent & {
+  elements: {
+    firstName: HTMLInputElement;
+    lastName: HTMLInputElement;
+  };
+};
 
 export const Forms = () => {
   const [formValues, setFormValues] = useState({ firstName: "", lastName: "" });
@@ -7,7 +15,7 @@ export const Forms = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          const target: any = e.target;
+          const target = e.target as TFormElements;
 
           const firstNameValid = target.elements.firstName.value.length > 2;
           const lastNameValid = target.elements.lastName.value.length > 2;
