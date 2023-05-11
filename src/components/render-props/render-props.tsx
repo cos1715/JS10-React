@@ -14,6 +14,7 @@ interface ICounter {
   renderProps: (count: number, onCountUpdate: () => void) => ReactNode;
 }
 
+// Компонент обгортка яка дозволяє поілитись логікою
 const Counter = ({ children, renderProps }: ICounter) => {
   const [count, setCount] = useState(0);
 
@@ -21,12 +22,15 @@ const Counter = ({ children, renderProps }: ICounter) => {
     setCount(count + 1);
   };
 
+  // Викликаємо функцію і пердаєм їй аргументи
   const myJsx = renderProps(count, onCountUpdate);
 
+  // Використовуємо результат функції
   return <div>{myJsx}</div>;
 };
 
 export const RenderProps = () => {
+  // Звичайна функція яка повертає JSX
   const renderProps: ICounter["children"] = (count, onCountUpdate) => {
     return (
       <>
@@ -38,6 +42,7 @@ export const RenderProps = () => {
 
   return (
     <div>
+      {/* Передаєм цю функцію як children або як props */}
       <Counter renderProps={renderProps}>{renderProps}</Counter>
     </div>
   );
