@@ -1,90 +1,110 @@
-import { Formik, Form, Field } from "formik";
-// Імпорт всього з yup
+import { useEffect, useRef, useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { FormItem } from "components/FormItem";
 
-interface IForm {
-  name: string;
-  email: string;
-  terms: boolean;
+const ControlledComponent = () => {
+  const [value, setValue] = useState("");
+
+  const onChange = (e: any) => {
+    setValue(e.target.value);
+  };
+
+  return <input value={value} onChange={onChange} />;
+};
+
+const UncontrolledComponent = () => {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    console.log(inputRef.current);
+  }, [inputRef]);
+
+  return <input ref={inputRef} />;
+};
+
+interface IFormValues {
+  firstName: string;
+  university?: string;
+  student: boolean;
 }
 
-// Схема фалідації
-// Прописуєм правила для кожного поля у формі
-// Раджу почитати Yup документацію для того щоб +- знати які є методи
-// Створити загальний yup об'єкт
+const initialValues: IFormValues = {
+  firstName: "",
+  university: "",
+  student: false,
+};
+
 const validationSchema = Yup.object({
-  // Дивимся якого типу в нас будуть дані в інпуті і прописуєм праила
-  name: Yup.string().min(3, "Value is too short").required("Required"),
-  email: Yup.string().email("Please enter an email").required("Required"),
-  terms: Yup.boolean().isTrue("Please accept terms").required("Required"),
+  firstName: Yup.string().required("Required").min(5, "Name is too short"),
+  student: Yup.boolean(),
+  university: Yup.string().when("student", {
+    is: true,
+    then: (schema) =>
+      schema
+        .required("Required")
+        .test("university-name", "Not correct university", (value, context) => {
+          return value.toLowerCase() === "university" && context.parent.student;
+        }),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
-// Не забудьте дати початкуові значення відмінні від undefined
-const initialValues: IForm = { name: "", email: "", terms: false };
+// if(student===true){
+//   (schema) => schema.required("Required"),
+// }else{
+//   (schema) => schema.notRequired(),
+// }
 
 export const FormikForm = () => {
+  const onSubmit = (values: IFormValues) => {
+    console.log("submit", values);
+  };
+
   return (
-    // Загальний формік копнент
     <Formik
-      // Передати схему  валідації
-      validationSchema={validationSchema}
-      // Обов'зковий проп
       initialValues={initialValues}
-      // Обов'зковий проп
-      onSubmit={(values, formikBag) => {
-        console.log("values", values);
-        console.log("formikBag", formikBag);
-      }}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
     >
-      {/* Використовуєм функцію яка повертає форму */}
-      {/* Функція приймає пропси із форміка */}
-      {({ touched, values, errors, isValid, handleBlur, handleChange }) => {
-        console.log("touched", touched);
-        console.log("values", values);
-        console.log("errors", errors);
+      {({ values, handleChange, setFieldValue }) => {
         return (
-          // Обгортка форми від форміка
           <Form>
-            <label>
-              Name:
-              {/* Використати свій інпут */}
-              <input
-                type="text"
-                name="name"
-                // Обов'язково передати
-                value={values.name}
-                // Обов'язково передати
-                onBlur={handleBlur}
-                // Обов'язково передати
-                onChange={handleChange}
-              />
-            </label>
-            <p style={{ color: "red" }}>{errors.name}</p>
+            <FormItem name="firstName" label="First Name:">
+              <Field name="firstName" />
+            </FormItem>
+
             <br />
             <label>
-              Email:
-              {/* Викоистати обгортку інпута він форміка */}
-              {/* В нього теж можна передати свій компонент */}
-              <Field name="email" type="email" />
+              University:
+              <Field name="university" disabled={!values.student} />
             </label>
-            <p style={{ color: "red" }}>{errors.email}</p>
+            <ErrorMessage component="div" name="university" />
             <br />
             <label>
-              Terms:
-              <input
+              Student:
+              {/* <input
+                name="student"
                 type="checkbox"
-                name="terms"
-                checked={values.terms}
+                checked={values.student}
                 onBlur={handleBlur}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              /> */}
+              <Field
+                name="student"
+                type="checkbox"
+                onChange={(e: any) => {
+                  if (!e.target.checked) {
+                    setFieldValue("university", "");
+                  }
+                  handleChange(e);
+                }}
               />
             </label>
-            <p style={{ color: "red" }}>{errors.terms}</p>
             <br />
-            <br />
-            <button type="submit" disabled={!isValid}>
-              Submit
-            </button>
+            <button type="submit">Submit</button>
           </Form>
         );
       }}

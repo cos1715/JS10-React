@@ -1,16 +1,19 @@
 # JS Homework
 
-## Form error handle
+## Formik advanced
 
 Create form  
-Add two inputs  
+Add three inputs  
 First name input  
 Last name input  
-On submit event validate input values  
-If input values length is less then 3  
-Show error under input  
-If first name is too short  
-Show error message under first name input  
-Message content should be: First name is too short  
-Same logic applies for last name input  
-Also this should work if both inputs are invalid
+Email input  
+Add validation rules  
+Choose rules by yourself  
+Create form element component  
+This component should handle labels and error messages  
+This component can wrap other form controls  
+Form controls should react to form state  
+Add error state and success state to components
+
+P.S. Think through component architecture  
+Try to improve current one
