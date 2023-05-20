@@ -3,14 +3,14 @@ import { ErrorMessage, FormikContextType, useFormikContext } from "formik";
 import cn from "classnames";
 import styles from "./FormItem.module.scss";
 
-interface IFormItem {
+interface IFormItem<T> {
   children: ReactNode;
   label: string;
-  name: string;
+  name: keyof T;
 }
 
-export const FormItem = ({ label, children, name }: IFormItem) => {
-  const { errors, touched }: FormikContextType<any> = useFormikContext();
+export function FormItem<T = string>({ label, children, name }: IFormItem<T>) {
+  const { errors, touched }: FormikContextType<T> = useFormikContext();
   const successState = !errors[name] && touched[name];
   const errorState = errors[name] && touched[name];
 
@@ -26,10 +26,10 @@ export const FormItem = ({ label, children, name }: IFormItem) => {
       </label>
       {children}
       <ErrorMessage
-        name={name}
+        name={name.toString()}
         component="div"
         className={cn(styles["error"], styles["mt-8"])}
       />
     </div>
   );
-};
+}
