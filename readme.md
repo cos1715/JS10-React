@@ -1,12 +1,14 @@
 # JS Homework
 
-## Formik advanced
+## React hook form advanced
 
-Create form  
+Create form
+Use react hook from  
 Add three inputs  
 First name input  
 Last name input  
 Email input  
+Add yup  
 Add validation rules  
 Choose rules by yourself  
 Create form element component  

@@ -1,11 +1,10 @@
-import { FormikForm } from "sections/formik";
-
+import { Form } from "sections/form";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <FormikForm />
+      <Form />
     </div>
   );
 }
