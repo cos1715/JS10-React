@@ -19,7 +19,9 @@
     "paths": {
       "components/*": ["./src/components/*"],
       "sections/*": ["./src/sections/*"],
-      "providers/*": ["./src/providers/*"]
+      "providers/*": ["./src/providers/*"],
+      "routes/*": ["./src/routes/*"],
+      "pages/*": ["./src/pages/*"]
     }
   },
   "include": ["src"],
