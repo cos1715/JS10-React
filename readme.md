@@ -3,6 +3,7 @@
 ## Formik error handle
 
 Create form  
+Use formik  
 Add two inputs  
 First name input  
 Last name input  
