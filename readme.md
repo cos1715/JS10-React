@@ -1,6 +1,6 @@
 # JS Homework
 
-## Form error handle
+## Formik error handle
 
 Create form  
 Add two inputs  
