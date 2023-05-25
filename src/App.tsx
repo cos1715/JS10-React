@@ -1,24 +1,124 @@
 import { useState } from "react";
-import { DragDropContext } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  OnDragEndResponder,
+  OnDragStartResponder,
+  OnDragUpdateResponder,
+} from "react-beautiful-dnd";
+import styled from "@emotion/styled";
 import { Column } from "./components/column/column";
-import { initialData } from "./data";
+import { TTaskId, IColumns, IData, initialData, TColumnId } from "./data";
 
 import "./App.css";
 
+const Container = styled.div`
+  display: flex;
+`;
+
 function App() {
   const [state, setState] = useState(initialData);
-  const onDragEnd = (...rest: unknown[]) => {
-    console.log("onDragEnd", rest);
+  const [homeIndex, setHomeIndex] = useState<number | null>();
+  const onDragEnd: OnDragEndResponder = (result) => {
+    const { destination, source, draggableId } = result;
+    setHomeIndex(null);
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    const start = state.columns[source.droppableId];
+    const finish = state.columns[destination.droppableId];
+    if (start === finish) {
+      const newTaskIds = Array.from(start.taskIds);
+      newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(destination.index, 0, draggableId as TTaskId);
+
+      const newColumn: IColumns = {
+        ...start,
+        taskIds: newTaskIds,
+      };
+      const newState: IData = {
+        ...state,
+        columns: {
+          ...state.columns,
+          [newColumn.id]: newColumn,
+        },
+      };
+
+      document.body.style.color = "inherit";
+      document.body.style.backgroundColor = "inherit";
+      setState(newState);
+    } else {
+      const startTaskIds = Array.from(start.taskIds);
+      const finishTaskIds = Array.from(finish.taskIds);
+      startTaskIds.splice(source.index, 1);
+      finishTaskIds.splice(destination.index, 0, draggableId as any);
+      const newStart: IColumns = {
+        ...start,
+        taskIds: startTaskIds,
+      };
+      const newFinish: IColumns = {
+        ...finish,
+        taskIds: finishTaskIds,
+      };
+      const newState: IData = {
+        ...state,
+        columns: {
+          ...state.columns,
+          [newStart.id]: newStart,
+          [finish.id]: newFinish,
+        },
+      };
+      setState(newState);
+    }
+  };
+
+  const onDragUpdate: OnDragUpdateResponder = (update) => {
+    const opacity = update.destination
+      ? update.destination.index / Object.keys(state.tasks).length
+      : 0;
+
+    document.body.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+  };
+
+  const onDragStart: OnDragStartResponder = (start) => {
+    if (start.source.droppableId === "column-1") {
+      document.body.style.color = "red";
+    }
+    document.body.style.transition = "all 0.2s";
+    const homeIndex = state.columnOrder.indexOf(
+      start.source.droppableId as TColumnId
+    );
+    setHomeIndex(homeIndex);
   };
 
   return (
     <div className="App">
-      <DragDropContext onDragEnd={onDragEnd}>
-        {state.columnOrder.map((columnId) => {
-          const column = state.columns[columnId];
-          const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
-          return <Column key={column.id} column={column} tasks={tasks} />;
-        })}
+      <DragDropContext
+        onDragStart={onDragStart}
+        onDragUpdate={onDragUpdate}
+        onDragEnd={onDragEnd}
+      >
+        <Container>
+          {state.columnOrder.map((columnId, index) => {
+            const column = state.columns[columnId];
+            const tasks = column.taskIds.map((taskId) => state.tasks[taskId]);
+            return (
+              <Column
+                key={column.id}
+                column={column}
+                tasks={tasks}
+                isDropDisabled={index < (homeIndex || 0)}
+              />
+            );
+          })}
+        </Container>
       </DragDropContext>
     </div>
   );
