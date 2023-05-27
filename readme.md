@@ -1,10 +1,9 @@
 # JS Homework
 
-## React pages
+## Redux
 
-Create home page  
-On this page show list of github users  
-Show only their name and add btn `see more`  
-Create home page nested routes  
-This rout should be dynamic  
-If click `see more` navigate to nested route and load user info
+Create form  
+Use formik or react hook form for creation  
+Add 3 fields. First name, Last name, Email  
+On submit store user info in store  
+Show list of users somewhere in app  
