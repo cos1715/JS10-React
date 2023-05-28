@@ -7,6 +7,7 @@ import "./App.css";
 
 function App() {
   return (
+    // Використовум Provider щоб мати доступ до store в компонентах
     <Provider store={store}>
       <div className="App">
         <ThemeChanger />

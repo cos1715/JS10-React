@@ -20,7 +20,8 @@
       "components/*": ["./src/components/*"],
       "sections/*": ["./src/sections/*"],
       "providers/*": ["./src/providers/*"],
-      "pages/*": ["./src/pages/*"]
+      "pages/*": ["./src/pages/*"],
+      "store/*": ["./src/store/*"]
     }
   },
   "include": ["src"],

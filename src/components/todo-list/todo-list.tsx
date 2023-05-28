@@ -2,18 +2,17 @@ import { ChangeEvent, useState } from "react";
 import uniqid from "uniqid";
 import { useTodoSelector } from "../../store/selectors/todoSelectors";
 import { useDispatch } from "react-redux";
-import {
-  addTodo,
-  deleteTodo,
-  updateTodo,
-} from "../../store/actions/todoActions";
+import { addTodo, deleteTodo, updateTodo } from "store/actions/todoActions";
 
 export const TodoList = () => {
   const [todo, setTodo] = useState("");
+  // значення зі store
   const todoList = useTodoSelector();
+  // спеціальна функція для відправки action
   const dispatch = useDispatch();
 
   const onAdd = () => {
+    // відправки action
     dispatch(addTodo({ id: uniqid(), completed: false, content: todo }));
     setTodo("");
   };
