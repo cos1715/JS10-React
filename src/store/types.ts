@@ -18,10 +18,15 @@ export interface ITodoItem {
   completed: boolean;
 }
 
-export interface IProducts {
+export interface ILoadable<T, Y> {
   loading: boolean;
-  data: null | unknown;
-  error: null | string;
+  data: null | T;
+  error: null | Y;
+}
+
+export interface IProducts {
+  productsList: ILoadable<any, any>;
+  product: ILoadable<any, any>;
 }
 
 export interface IStore {

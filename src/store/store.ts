@@ -1,24 +1,18 @@
-import { combineReducers, compose, createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { todoReducer } from "./reducers/todoReducer";
-import { themeReducer } from "./reducers/themeReducer";
-import { productsReducer } from "./reducers/productsReducer";
+import { configureStore } from "@reduxjs/toolkit";
+import { todoReducer } from "./slice/todo";
+import { themeReducer } from "./slice/theme";
+import { productsReducer } from "./slice/products";
 
-// складаєм всі редюсери в один
-const rootReducer = combineReducers({
-  todo: todoReducer,
-  theme: themeReducer,
-  products: productsReducer,
-  // тут можна додати інші reducers, якщо є потреба
+// створити стор
+export const store = configureStore({
+  reducer: {
+    todo: todoReducer,
+    theme: themeReducer,
+    products: productsReducer,
+  },
 });
 
-// змінна яка перевіряє який compose використати
-// якщо встановлений REDUX_DEVTOOLS_EXTENSION то берем від нього compose якщо ні то стандартний
-const composeEnhancer =
-  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-export const store = createStore(
-  rootReducer,
-  {},
-  composeEnhancer(applyMiddleware(thunk))
-);
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;

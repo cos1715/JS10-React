@@ -1,18 +1,23 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { fetchProducts } from "store/actions/productsAction";
-import { useProductSelector } from "store/selectors/productsSelector";
-import { TThunkDispatch } from "store/types";
+import { useAppDispatch } from "store/hooks";
+import {
+  useProductsListSelector,
+  useProductSelector,
+  fetchProductsList,
+  fetchProduct,
+} from "store/slice/products";
 
 export const Products = () => {
-  const dispatch = useDispatch<TThunkDispatch>();
-  const products = useProductSelector();
+  const dispatch = useAppDispatch();
+  const productsList = useProductsListSelector();
+  const product = useProductSelector();
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProductsList());
+    dispatch(fetchProduct(1342323));
   }, [dispatch]);
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <div>
