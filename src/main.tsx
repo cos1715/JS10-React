@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-// import App from "./App";
-import App from "./react-dnd";
+import App from "./App";
+// import App from "./react-dnd";
 // import App from "./AlternativeApp";
 import "./index.css";
 
