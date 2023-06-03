@@ -6,4 +6,5 @@ Send Module Project Idea
 
 ### Finish app (optional)
 
-Finish user list and user pages  
+Finish user list and user pages   
+Add typings and replace any type in project    
