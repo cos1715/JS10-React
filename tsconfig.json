@@ -21,7 +21,8 @@
       "sections/*": ["./src/sections/*"],
       "providers/*": ["./src/providers/*"],
       "pages/*": ["./src/pages/*"],
-      "store/*": ["./src/store/*"]
+      "store/*": ["./src/store/*"],
+      "routes/*": ["./src/routes/*"]
     }
   },
   "include": ["src"],
