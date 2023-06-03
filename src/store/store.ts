@@ -1,14 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { todoReducer } from "./slice/todo";
-import { themeReducer } from "./slice/theme";
-import { productsReducer } from "./slice/products";
+import { profileReducer } from "./slice/profile";
 
-// створити стор
 export const store = configureStore({
   reducer: {
-    todo: todoReducer,
-    theme: themeReducer,
-    products: productsReducer,
+    profile: profileReducer,
   },
 });
 

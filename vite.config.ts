@@ -5,6 +5,9 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    global: {},
+  },
   plugins: [
     react(),
     checker({
@@ -20,6 +23,7 @@ export default defineConfig({
       pages: path.resolve(__dirname, "./src/pages"),
       store: path.resolve(__dirname, "./src/store"),
       routes: path.resolve(__dirname, "./src/routes"),
+      "node-fetch": "isomorphic-fetch",
     },
   },
 });

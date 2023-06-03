@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.mb-8 {
+  margin-bottom: 8px;
+}
+
+.mb-40 {
+  margin-bottom: 40px;
+}
+
+.error-msg {
+  height: 24px;
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: red;
+}

@@ -10,18 +10,18 @@ export const Layout: React.FC = () => {
       <header className={styles["header"]}>
         {routesConfig.map(([key, value], index) => {
           return key === "user" ? null : (
-            <>
-              <NavLink to={value} key={key}>
-                {key.toUpperCase()}
-              </NavLink>
+            <div key={key} className={styles["nav-item"]}>
+              <NavLink to={value}>{key.toUpperCase()}</NavLink>
               {index < routesConfig.length - 1 ? (
                 <div className={styles["divider"]} />
               ) : null}
-            </>
+            </div>
           );
         })}
       </header>
-      <Outlet />
+      <main className={styles["main"]}>
+        <Outlet />
+      </main>
     </>
   );
 };

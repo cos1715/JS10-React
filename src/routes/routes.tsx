@@ -1,8 +1,9 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "./const";
-import { Home } from "pages/home";
 import { Layout } from "components/layout";
+import { Home } from "pages/home";
+import { Login } from "pages/login";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTES.login,
-        element: <div>Hello world login!</div>,
+        element: <Login />,
       },
       {
         path: ROUTES.user,

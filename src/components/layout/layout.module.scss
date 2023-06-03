@@ -6,8 +6,18 @@
   border-bottom: 2px solid white;
 }
 
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .divider {
   width: 2px;
   height: 24px;
   background-color: white;
+}
+
+.main {
+  padding: 42px;
 }
