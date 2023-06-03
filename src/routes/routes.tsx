@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ROUTES } from "./const";
 import { Layout } from "components/layout";
+import { ProtectedRoute } from "./protected-route";
 import { Home } from "pages/home";
 import { Login } from "pages/login";
 
@@ -19,11 +20,19 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTES.user,
-        element: <div>Hello world user!</div>,
+        element: (
+          <ProtectedRoute>
+            <div>Hello world user!</div>
+          </ProtectedRoute>
+        ),
       },
       {
         path: ROUTES.userList,
-        element: <div>Hello world uselist!</div>,
+        element: (
+          <ProtectedRoute>
+            <div>Hello world uselist!</div>
+          </ProtectedRoute>
+        ),
       },
     ],
   },
