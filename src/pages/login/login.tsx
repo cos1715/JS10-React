@@ -1,18 +1,21 @@
 import { useForm } from "react-hook-form";
 import cn from "classnames";
-import { useAppDispatch } from "store/hooks";
-import { fetchUserProfile, useProfileSelector } from "store/slice/profile";
 import styles from "./login.module.scss";
 import { useNavigate } from "react-router";
 import { ROUTES } from "routes/const";
+import { useProfileMutation } from "store/profile/mutations";
 
 interface IForm {
   username: string;
 }
 
+const getServerError = (err: any) => {
+  return err?.status === 404 ? "Please enter correct username" : "";
+};
+
 export const Login = () => {
-  const dispatch = useAppDispatch();
-  const { error, loading } = useProfileSelector();
+  const { mutateAsync, error } = useProfileMutation();
+
   const { register, handleSubmit, formState } = useForm<IForm>({
     defaultValues: { username: "" },
   });
@@ -20,11 +23,11 @@ export const Login = () => {
 
   const errorMsg = formState.errors.username?.type
     ? formState.errors.username.type.toUpperCase()
-    : error;
+    : getServerError(error);
 
   const onSubmit = handleSubmit(async (values) => {
-    const action = await dispatch(fetchUserProfile(values.username));
-    if (action.meta.requestStatus === "fulfilled") {
+    const resp = await mutateAsync(values.username);
+    if (resp.status === 200) {
       navigate(ROUTES.home);
     }
   });
@@ -46,7 +49,7 @@ export const Login = () => {
           })}
         />
         {errorMsg && <p className={styles["error-msg"]}>{errorMsg}</p>}
-        <button type="submit" disabled={loading}>
+        <button type="submit" disabled={!"loading"}>
           Sign in
         </button>
       </form>

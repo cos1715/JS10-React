@@ -38,8 +38,4 @@ const router = createBrowserRouter([
   },
 ]);
 
-// interface IRoutes {
-//   children: ReactNode;
-// }
-
 export const Routes: React.FC = () => <RouterProvider router={router} />;

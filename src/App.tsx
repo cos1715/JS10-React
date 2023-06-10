@@ -1,7 +1,9 @@
-import { Provider } from "react-redux";
 import { Octokit } from "@octokit/core";
-import { store } from "./store/store";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { queryClient } from "./store/store";
 import { Routes } from "routes/routes";
+import { AuthProvider } from "providers/auth";
 import { VITE_ACCESS_TOKEN } from "./const";
 
 import "./App.css";
@@ -21,11 +23,14 @@ export const sum = (a: number, b: number) => {
 
 function App() {
   return (
-    <div className="App">
-      <Provider store={store}>
-        <Routes />
-      </Provider>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <div className="App">
+          <Routes />
+        </div>
+      </AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

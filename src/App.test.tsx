@@ -4,9 +4,12 @@ jest.mock("./const", () => ({
   VITE_ACCESS_TOKEN: "test",
 }));
 
-test("Renders main page correctly", () => {
+
+
+test("Expect sum to work properly", () => {
   expect(sum(1, 1)).toBe(2);
 });
+
 
 describe("fetchUsers", () => {
   let originalFetch: typeof fetch;
