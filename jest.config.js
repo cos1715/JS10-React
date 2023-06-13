@@ -11,6 +11,8 @@ export default {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
     "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.ts",
   },
+  coveragePathIgnorePatterns: ["/node_modules/"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/"],
   transform: {
     "^.+\\.jsx?$": "babel-jest",
     "^.+\\.tsx?$": "ts-jest",
