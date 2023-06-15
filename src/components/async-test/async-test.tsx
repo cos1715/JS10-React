@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 async function fetchGreeting() {
   const response = await fetch("/api/greeting");

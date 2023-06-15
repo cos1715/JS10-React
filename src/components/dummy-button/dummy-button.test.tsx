@@ -1,9 +1,20 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { ToggleButton } from "./dummy-button";
 
-test("button click changes state", () => {
-  render(<ToggleButton />);
-  const button = screen.getByText("Close");
-  fireEvent.click(button);
-  expect(button).toHaveTextContent("Open");
+beforeAll(() => {
+  return render(<ToggleButton />);
+});
+
+describe("Dummy btn test", () => {
+  it("button without click", async () => {
+    render(<ToggleButton />);
+    const element = await screen.findByText("Close");
+    expect(element).toHaveTextContent("Close");
+  });
+  it("button after click", async () => {
+    render(<ToggleButton />);
+    const element = await screen.findByText("Close");
+    fireEvent.click(element);
+    expect(element).toHaveTextContent("Open");
+  });
 });

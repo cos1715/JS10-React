@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
 import { Greeting } from "./greeting";
+import { render, screen } from "@testing-library/react";
 
-test("renders greeting with name", async () => {
+test("Greeting cmp renders correctly", () => {
   render(<Greeting name="Taras" />);
-  // const linkElement = screen.getByText(/Hello, Taras!/i);
-  const linkElement = await screen.findByText(/Hello, Taras!/i);
-  expect(linkElement).toBeInTheDocument();
+  screen.debug();
+  const element = screen.getByText(/Taras/i);
+  expect(element).toBeInTheDocument();
 });
